@@ -61,9 +61,9 @@ If you want a one-line summary for a CV, use this:
 
 ## Algorithm Notes
 
-`dpo_loss` uses $-\log \sigma(\beta[(\log \pi_\theta(y_w)-\log \pi_\theta(y_l))-(\log \pi_{ref}(y_w)-\log \pi_{ref}(y_l))])$ so a policy prefers analyst-approved completions without fitting a separate reward model.
+`dpo_loss` uses the DPO objective: the negative log-sigmoid of beta times the policy log-ratio minus the reference log-ratio, so a policy prefers analyst-approved completions without fitting a separate reward model.
 
-`ppo_loss` implements the clipped surrogate $\min(r_t A_t, \operatorname{clip}(r_t,1-\epsilon,1+\epsilon)A_t)$. `grpo_loss` normalizes rewards within each completion group and applies the same clipped update, avoiding a value model while retaining relative credit assignment.
+`ppo_loss` implements the clipped surrogate objective: the smaller of the unclipped policy ratio times advantage and the same term after clipping the policy ratio to a fixed range. `grpo_loss` normalizes rewards within each completion group and applies the same clipped update, avoiding a value model while retaining relative credit assignment.
 
 ## Scale and serving
 
